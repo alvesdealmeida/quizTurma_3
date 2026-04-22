@@ -448,7 +448,8 @@ function validarPin() {
     overlay.classList.add('show');
     // Aqui você redireciona para a página do quiz:
     setTimeout(() => {
-      alert('✅ Acesso liberado! Redirecionando para o Quiz...\n\n(Substitua este alert pelo redirect real: window.location.href = "quiz.html")');
+       window.open('https://alvesdealmeida.github.io/quizTurma3/', '_blank');
+      /*alert('✅ Acesso liberado! Redirecionando para o Quiz...\n\n(Substitua este alert pelo redirect real: window.location.href = "quiz.html")'); */
       overlay.classList.remove('show');
       input.classList.remove('success-anim');
       input.value = '';
