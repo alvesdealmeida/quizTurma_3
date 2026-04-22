@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu — Plataforma Educ Games</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --card: #161d2f;
+    --border: rgba(255,255,255,0.07);
+    --accent: #4f8eff;
+    --accent2: #7c3aed;
+    --success: #10b981;
+    --danger: #ef4444;
+    --text: #e8ecf4;
+    --muted: #64748b;
+    --gold: #f59e0b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── Background grid ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(79,142,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(79,142,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    top: -30%; left: 20%;
+    width: 60%; height: 60%;
+    background: radial-gradient(ellipse, rgba(79,142,255,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Header ── */
+  header {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    background: rgba(10,14,26,0.8);
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .logo-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 12px var(--accent); }
+    50%      { box-shadow: 0 0 24px var(--accent), 0 0 40px rgba(79,142,255,0.3); }
+  }
+
+  .admin-link {
+    font-size: 0.78rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: all 0.2s;
+    cursor: pointer;
+    background: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .admin-link:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(79,142,255,0.05);
+  }
+
+  /* ── Main layout ── */
+  main {
+    position: relative; z-index: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1; height: 1px;
+    background: var(--border);
+  }
+
+  /* ── Card grid ── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(79,142,255,0.2);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+
+  .card-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .card-badge {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: rgba(79,142,255,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(79,142,255,0.2);
+    font-weight: 500;
+  }
+
+  /* ── QUIZ CARD — especial ── */
+  .quiz-card {
+    grid-column: span 1;
+    border-color: rgba(245,158,11,0.2);
+    background: linear-gradient(135deg, #161d2f 0%, #1a1530 100%);
+    position: relative;
+  }
+
+  .quiz-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--accent2), transparent);
+  }
+
+  .quiz-card .card-badge {
+    background: rgba(245,158,11,0.1);
+    color: var(--gold);
+    border-color: rgba(245,158,11,0.25);
+  }
+
+  /* ── PIN Area ── */
+  .pin-area {
+    margin-top: 20px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  .pin-label {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .pin-label svg { opacity: 0.6; }
+
+  .pin-input-row {
+    display: flex; gap: 8px; align-items: center;
+  }
+
+  .pin-input {
+    flex: 1;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    padding: 10px 14px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  .pin-input::placeholder {
+    letter-spacing: 0.15em;
+    font-size: 0.8rem;
+    font-weight: 400;
+    opacity: 0.3;
+  }
+  .pin-input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
+  }
+  .pin-input.error {
+    border-color: var(--danger);
+    box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+    animation: shake 0.35s ease;
+  }
+  .pin-input.success-anim {
+    border-color: var(--success);
+    box-shadow: 0 0 0 3px rgba(16,185,129,0.15);
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-6px); }
+    40%      { transform: translateX(6px); }
+    60%      { transform: translateX(-4px); }
+    80%      { transform: translateX(4px); }
+  }
+
+  .pin-btn {
+    background: linear-gradient(135deg, var(--gold), #d97706);
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-family: 'Syne', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 10px 16px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.2s, transform 0.1s;
+    letter-spacing: 0.05em;
+  }
+  .pin-btn:hover  { opacity: 0.9; }
+  .pin-btn:active { transform: scale(0.97); }
+
+  .pin-msg {
+    margin-top: 8px;
+    font-size: 0.78rem;
+    min-height: 18px;
+    transition: opacity 0.3s;
+  }
+  .pin-msg.err  { color: var(--danger); }
+  .pin-msg.ok   { color: var(--success); }
+
+  /* ── Overlay de sucesso ── */
+  .success-overlay {
+    display: none;
+    position: absolute; inset: 0;
+    background: rgba(16,185,129,0.08);
+    border-radius: 16px;
+    align-items: center; justify-content: center;
+    flex-direction: column; gap: 10px;
+    backdrop-filter: blur(2px);
+    z-index: 5;
+  }
+  .success-overlay.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+  .success-check {
+    font-size: 2.5rem;
+    animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes popIn {
+    from { transform: scale(0); } to { transform: scale(1); }
+  }
+  .success-overlay span {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--success);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    header { padding: 16px 20px; }
+    main   { padding: 36px 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-dot"></span>
+    Educ Games Educacional
+  </div>
+  <button class="admin-link" onclick="window.open('admin_pin.html','_blank')">⚙ Admin</button>
+</header>
+
+<main>
+  <div class="section-title">Módulos disponíveis</div>
+
+  <div class="card-grid">
+
+    <!-- Card 1 - Exemplo -->
+    <div class="card">
+      <span class="card-icon">📚</span>
+      <div class="card-title">Biblioteca</div>
+      <div class="card-desc">Acesse materiais e recursos de aprendizado organizados por tema.</div>
+      <span class="card-badge">Disponível</span>
+    </div>
+
+    <!-- Card 2 - Exemplo -->
+    <div class="card">
+      <span class="card-icon">🎮</span>
+      <div class="card-title">Jogos Educativos</div>
+      <div class="card-desc">Explore a coleção de jogos interativos para aprender brincando.</div>
+      <span class="card-badge">Disponível</span>
+    </div>
+
+    <!-- Card QUIZ — com PIN -->
+    <div class="card quiz-card" id="quiz-card">
+      <div class="success-overlay" id="success-overlay">
+        <div class="success-check">✅</div>
+        <span>Acessando o Quiz…</span>
+      </div>
+
+      <span class="card-icon">🏆</span>
+      <div class="card-title">Quiz da Turma</div>
+      <div class="card-desc">Desafio exclusivo liberado pelo professor. Insira o PIN de acesso para participar.</div>
+      <span class="card-badge">🔒 Acesso por PIN</span>
+
+      <div class="pin-area">
+        <div class="pin-label">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+          PIN de acesso
+        </div>
+        <div class="pin-input-row">
+          <input
+            type="text"
+            id="pin-input"
+            class="pin-input"
+            maxlength="6"
+            placeholder="••••••"
+            inputmode="numeric"
+            autocomplete="off"
+            oninput="this.value=this.value.replace(/\D/g,'')"
+            onkeydown="if(event.key==='Enter') validarPin()"
+          >
+          <button class="pin-btn" onclick="validarPin()">ENTRAR</button>
+        </div>
+        <div class="pin-msg" id="pin-msg"></div>
+      </div>
+    </div>
+
+    <!-- Card 4 - Exemplo -->
+    <div class="card">
+      <span class="card-icon">📊</span>
+      <div class="card-title">Resultados</div>
+      <div class="card-desc">Acompanhe seu desempenho e evolução nas atividades realizadas.</div>
+      <span class="card-badge">Disponível</span>
+    </div>
+
+  </div>
+</main>
+
+<script>
+function validarPin() {
+  const input = document.getElementById('pin-input');
+  const msg   = document.getElementById('pin-msg');
+  const overlay = document.getElementById('success-overlay');
+  const val   = input.value.trim();
+
+  const pinSalvo = localStorage.getItem('quiz_pin_ativo');
+
+  // Reset
+  input.classList.remove('error', 'success-anim');
+  msg.className = 'pin-msg';
+  msg.textContent = '';
+
+  if (!val) {
+    input.classList.add('error');
+    msg.className = 'pin-msg err';
+    msg.textContent = 'Digite o PIN para continuar.';
+    return;
+  }
+
+  if (!pinSalvo) {
+    input.classList.add('error');
+    msg.className = 'pin-msg err';
+    msg.textContent = 'Nenhum PIN ativo. Aguarde o professor gerar um.';
+    return;
+  }
+
+  if (val === pinSalvo) {
+    input.classList.add('success-anim');
+    msg.className = 'pin-msg ok';
+    msg.textContent = 'PIN correto! Redirecionando…';
+    overlay.classList.add('show');
+    // Aqui você redireciona para a página do quiz:
+    setTimeout(() => {
+      alert('✅ Acesso liberado! Redirecionando para o Quiz...\n\n(Substitua este alert pelo redirect real: window.location.href = "quiz.html")');
+      overlay.classList.remove('show');
+      input.classList.remove('success-anim');
+      input.value = '';
+      msg.textContent = '';
+    }, 1800);
+  } else {
+    input.classList.add('error');
+    msg.className = 'pin-msg err';
+    msg.textContent = 'PIN incorreto. Tente novamente.';
+    input.value = '';
+    setTimeout(() => input.classList.remove('error'), 600);
+  }
+}
+</script>
+</body>
+</html>
